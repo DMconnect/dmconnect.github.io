@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>DXP-0002: HTTP File Upload</title>
+<style type="text/css">
+body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+h1 {
+    text-align: center;
+    color: #003366;
+    font-size: 16px;
+    margin: 10px 0;
+    font-style: italic;
+}
+small { color: #555555; }
+table.desc td, table.desc th {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+a { color: #003366; text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul {
+    margin: 1em 0;
+    padding-left: 2em;
+    list-style-type: disc;
+}
+li {
+    margin: 0;
+    padding: 0;
+}
+</style>
+
+</head>
+
+<body>
+<center>
+<table width="640" border="0" cellspacing="0" cellpadding="8" bgcolor="#FFFFFF">
+  <tr>
+    <td align="center">
+      <h1>DXP-0002: HTTP File Upload</h1>
+      <table class="desc" width="90%" border="0" cellspacing="0" cellpadding="0">
+        <tr><td>
+          <small>
+          <!--<center><font color="RED"><b>Внимание! Расширение не готово - является черновиком</b>.</font></center>
+          <br>
+          <br>
+          -->
+          
+          DXP-0002 добавляет функциональность загрузки файлов в DMconnect при помощи стандарта <b>HTTP</b>.
+          <br><br>
+          <b>Описание:</b><br>
+          Когда пользователь выбирает файл для отправки, клиент особым образом обращается к серверу и загружает туда этот файл.
+          <br>
+          <br>
+          Сервер принимает файл, сохраняет его у себя и возвращает клиенту уникальную ссылку на этот файл, после этого клиент просто отправляет эту ссылку как обычное сообщение.
+          <br>
+          <br>
+          При этом скачать файл можно будет даже при помощи браузера, однако файл ограничен сроком хранения в <b>сутки</b> (срок может варьироваться в зависимости от сервера).
+          <br><br>
+          <b>Доступные команды:</b><br>
+          <ul>
+            <li><b>/http_file_upload-info</b> — информация о сервере загрузки файлов. Команда вернёт сообщение вида:
+            <pre>
+HTTP upload endpoint: http://<b>&lt;ХОСТ&gt;</b>:<b>&lt;ПОРТ&gt;</b>/upload
+Download URL: http://<b>&lt;ХОСТ&gt;</b>:<b>&lt;ПОРТ&gt;</b>/file/<b>&lt;ID&gt;</b>/<b>&lt;filename&gt;</b>
+Retention (TTL): <b>&lt;ВРЕМЯ ДОСТУПНОСТИ ФАЙЛА&gt;</b> seconds.
+Max file size: <b>&lt;МАКСИМАЛЬНЫЙ РАЗМЕР ФАЙЛА&gt;</b> bytes.</pre>
+            </li>
+          </ul>
+          <b>Работа по HTTP:</b><br>
+          DXP-0002 реализует небольшой HTTP-сервер, предназначенный для загрузки и выгрузки файлов.
+          <br><br>
+          Чтобы загрузить файл, клиенту нужно обратиться по этому адресу:
+          <pre>http://<b>&lt;ХОСТ&gt;</b>:<b>&lt;ПОРТ&gt;</b>/upload</pre>
+          C методом <b>POST</b> и типом данных <b>multipart/form-data</b>.  
+          <br>
+          <br>
+          После получения запроса сервер:
+          <ol>
+          <li>Проверяет размер файла и тип запроса.</li>
+          <li>Сохраняет файл во внутреннюю папку <code>uploads/</code> с уникальным идентификатором.</li>
+          <li>Создаёт временную ссылку для скачивания.</li>
+          <li>Возвращает клиенту JSON-ответ с информацией о файле и ссылкой, например:
+          <pre>
+{
+  "status": "ok",
+  "id": "<b>&lt;ID&gt;</b>",
+  "filename": "<b>&lt;ИМЯ ФАЙЛА&gt;</b>",
+  "size": <b>&lt;РАЗМЕР ЗАГРУЖЕННОГО ФАЙЛА В БАЙТАХ&gt;</b>,
+  "url": "http://<b>&lt;ХОСТ&gt;</b>:<b>&lt;ПОРТ&gt;</b>/file/<b>&lt;ID&gt;</b>/<b>&lt;ИМЯ ФАЙЛА&gt;</b>"
+}</pre>
+          </li>
+          </ol>
+          <br>
+          Клиент, получив ссылку, просто отправляет её в виде обычного текстового сообщения, чтобы другие пользователи могли скачать файл.
+          <br><br>
+          Любой пользователь (или браузер) может перейти по ссылке вида:
+          <pre>http://<b>&lt;ХОСТ&gt;</b>:<b>&lt;ПОРТ&gt;</b>/file/<b>&lt;ID&gt;</b>/<b>&lt;ИМЯ ФАЙЛА&gt;</b></pre>
+          И скачать файл напрямую.  
+          <br>
+          <br>
+          Передача осуществляется стандартным методом <b>GET</b> — сервер отвечает заголовками Content-Type и Content-Disposition, чтобы браузер корректно загрузил файл.
+          <br><br>
+          Файлы хранятся ограниченное время (по умолчанию — <b>24 часа</b>).  
+          <br>
+          <br>
+          <center><a href="index.html">&lt;&lt; Назад к списку расширений</a></center>
+          </small>
+        </td></tr>
+      </table>
+      <br>
+      <small>&copy; 2025 BitByByte.</small>
+    </td>
+  </tr>
+</table>
+</center>
+</body>
+</html>
