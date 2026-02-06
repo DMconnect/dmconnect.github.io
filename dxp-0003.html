@@ -1,0 +1,145 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>DXP-0003: Ignore</title>
+<style type="text/css">
+body {
+    background-color: #FFFFFF;
+    color: #000000;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+}
+h1 {
+    text-align: center;
+    color: #003366;
+    font-size: 16px;
+    margin: 10px 0;
+    font-style: italic;
+}
+small { color: #555555; }
+table.desc td, table.desc th {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+}
+a { color: #003366; text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul {
+    margin: 1em 0;
+    padding-left: 2em;
+    list-style-type: disc;
+}
+li {
+    margin: 0;
+    padding: 0;
+}
+code {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 12px;
+}
+</style>
+
+</head>
+
+<body>
+<center>
+<table width="640" border="0" cellspacing="0" cellpadding="8" bgcolor="#FFFFFF">
+  <tr>
+    <td align="center">
+      <h1>DXP-0003: Ignore</h1>
+      <table class="desc" width="90%" border="0" cellspacing="0" cellpadding="0">
+        <tr><td>
+          <small>
+          DXP-0003 добавляет функциональность игнорирования пользователей в DMconnect.
+          <br><br>
+          <b>Описание:</b><br>
+          Расширение позволяет пользователю управлять собственным списком игнорирования.
+          Сообщения от пользователей, находящихся в ignore-листе, автоматически
+          отфильтровываются и не доставляются получателю.
+          <br><br>
+          Список игнорирования хранится на сервере и не сбрасывается после перезахода в аккаунт.
+          <br><br>
+          <b>Доступные команды:</b><br>
+          <ul>
+            <li>
+              <b>/ignore-add &lt;username&gt;</b> — добавить пользователя в список игнорирования.<br>
+              Пример: <code>/ignore-add Bob</code>
+            </li>
+            <li>
+              <b>/ignore-del &lt;username&gt;</b> — удалить пользователя из списка игнорирования.<br>
+              Пример: <code>/ignore-del Bob</code>
+            </li>
+            <li>
+              <b>/ignore-list</b> — показать текущий список игнорируемых пользователей.
+            </li>
+            <li>
+              <b>/ignore-clear</b> — полностью очистить список игнорирования.
+            </li>
+          </ul>
+          <br>
+          <b>Ответы сервера:</b><br>
+          <ul>
+            <li>
+              <b>Please log in first.</b><br>
+              Возвращается при попытке использования любой команды расширения без активной авторизации.
+            </li>
+
+            <li>
+              <b>Usage: /ignore-add &lt;username&gt;</b><br>
+              Возвращается, если команда <code>/ignore-add</code> вызвана без указания имени пользователя.
+            </li>
+
+            <li>
+              <b>Ignoring &lt;username&gt;.</b><br>
+              Пользователь успешно добавлен в список игнорирования.  
+              Если пользователь уже находился в списке, сообщение всё равно возвращается.
+            </li>
+
+            <li>
+              <b>Usage: /ignore-del &lt;username&gt;</b><br>
+              Возвращается, если команда <code>/ignore-del</code> вызвана без указания имени пользователя.
+            </li>
+
+            <li>
+              <b>&lt;username&gt; is not in your ignore list.</b><br>
+              Возвращается при попытке удалить пользователя, которого нет в списке игнорирования.
+            </li>
+
+            <li>
+              <b>Stopped ignoring &lt;username&gt;.</b><br>
+              Пользователь успешно удалён из списка игнорирования.
+            </li>
+
+            <li>
+              <b>Ignore list: user1, user2, ...</b><br>
+              Возвращается командой <code>/ignore-list</code>, если список игнорирования не пуст.
+            </li>
+
+            <li>
+              <b>Ignore list is empty.</b><br>
+              Возвращается командой <code>/ignore-list</code>, если список игнорирования пуст.
+            </li>
+
+            <li>
+              <b>Ignore list cleared.</b><br>
+              Возвращается после успешного выполнения команды <code>/ignore-clear</code>, если список ранее содержал элементы.
+            </li>
+
+            <li>
+              <b>Ignore list is already empty.</b><br>
+              Возвращается при выполнении <code>/ignore-clear</code>, если список игнорирования уже пуст.
+            </li>
+          </ul>
+          <br>
+          <center><a href="index.html">&lt;&lt; Назад к списку расширений</a></center>
+          </small>
+        </td></tr>
+      </table>
+      <br>
+      <small>&copy; 2025 BitByByte.</small>
+    </td>
+  </tr>
+</table>
+</center>
+</body>
+</html>
